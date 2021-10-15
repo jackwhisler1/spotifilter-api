@@ -1,9 +1,11 @@
+@jwt = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzQ2ODEwNTl9.KIRwQOT_HMpiFzC98XcgFKsZa9VyCYSv7MLql3OBQ1g"
+###
 POST http://127.0.0.1:3000/users
 Content-Type: application/json
 
 {
-  "name": "Jack",
-  "email": "jack@gmail.com",
+  "name": "robert",
+  "email": "robert@gmail.com",
   "password": "password",
   "password_confirmation": "password"
 }
@@ -16,3 +18,20 @@ Content-Type: application/json
   "email": "jack@gmail.com",
   "password": "password"
 }
+
+
+### Users show
+GET http://localhost:3000/users/1
+
+### Update user
+PATCH http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+  "name": "Jon",
+  "password": "password",
+  "password_confirmation": "password"
+}
+
+### Destroy user
+DELETE http://localhost:3000/users/3
