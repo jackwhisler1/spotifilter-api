@@ -1,0 +1,2 @@
+class SharedPlaylist < ApplicationRecord
+end
