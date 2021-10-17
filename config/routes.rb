@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  # spotify api calls
+  namespace :api do
+    get "/spotify_authorize" => "spotify#spotify_authorize"
+    get "/spotify/callback" => "spotify#spotify_callback"
+  end
+
   #index
   get "/shared_playlists" => "shared_playlists#index"
   #create
