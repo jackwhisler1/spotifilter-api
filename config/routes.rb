@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   namespace :api do
     get "/spotify_authorize" => "spotify#spotify_authorize"
     get "/spotify/callback" => "spotify#spotify_callback"
+    get "/spotify/refresh" => "spotify#spotify_refresh"
+    get "/spotify/top_songs" => "spotify#top_songs"
   end
 
   #index
