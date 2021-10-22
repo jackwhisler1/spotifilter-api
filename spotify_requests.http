@@ -1,2 +1,10 @@
 ###
 GET http://127.0.0.1:3000/api/spotify/refresh
+
+
+###
+GET https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=200&offset=5
+Authorization: Bearer BQDFryYVZhKnf-053Id3yVPsFxyhnCciK-yBljzGMiWbxiU5wom6mqvVSJWq6ItFYjUW_-iSQ0FQGm1dYvsJrypy5hL9ZhSodd9945kwREfh8g4ik5mXJQjq4nDD64sGKNwlJbEpwIvcpuhiYhxhP_9o0mg1FO1pD_YX9NK8q-12DDiK
+Content-Type: application/json
+
+

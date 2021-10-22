@@ -1,10 +1,4 @@
 class ApplicationController < ActionController::API
-  def get_token
-    Rails.cache.fetch("access_token", expires_in: 1.hour) do
-
-    # Post request in do loop in case it doesn't find access token
-    end
-  end
 
   # current user
   def current_user

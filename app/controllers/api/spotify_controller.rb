@@ -1,4 +1,5 @@
 class Api::SpotifyController < ApplicationController
+  before_action :authenticate_user
   def spotify_authorize
     redirect_to "https://accounts.spotify.com/authorize?client_id=#{Rails.application.credentials.spotify_api_key[:client_id]}&response_type=code&redirect_uri=http://localhost:3000/api/spotify/callback&scope=playlist-modify-private"
   end
@@ -13,12 +14,12 @@ class Api::SpotifyController < ApplicationController
       client_id: Rails.application.credentials.spotify_api_key[:client_id],
       client_secret: Rails.application.credentials.spotify_api_key[:client_secret]
     })
-    @access_token = response.parse["access_token"]
+    access_token = response.parse["access_token"]
+    refresh_token = response.parse["refresh_token"]
+    access_token = ("access_token", @access_token)
+    response = HTTP.auth("Bearer #{@access_token}").get("https://api.spotify.com/v1/me")
+    current_user.access_token = access_token
     render json: response.parse
-    # refresh_token = response.parse["refresh_token"]
-    # access_token = ("access_token", @access_token)
-    # response = HTTP.auth("Bearer #{@access_token}").get("https://api.spotify.com/v1/me")
-    # render json: response.parse
   end
 
   def spotify_refresh
@@ -29,17 +30,20 @@ class Api::SpotifyController < ApplicationController
 
   def top_songs
     # Need to find a way to send this get request with authorization
-    response = HTTP.auth("Bearer #{@access_token} ").get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=200&offset=5" 
-    response.parse
+    response = HTTP.auth("Bearer #{get_token}").get("https://api.spotify.com/v1/me/playlists")
+
+    # .get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=200&offset=5") 
+    # Currently not sending any headers
     songs = []
-    response["items"].each do |song|
-      songs << {
-       "title": song["name"],
-       "artist": song["artists"][0]["name"]
-      }
-    end
-  #   render json: reponse
-  # end
+    # response["items"].each do |song|
+    #   songs << {
+    #    "title": song["name"],
+    #    "artist": song["artists"][0]["name"]
+    #   }
+    # end
+    response = response.parse(:json)
+    render json: response.as_json
+  end
   # MVP
   # Get tokens 
   # Use tokens to get top tracks

@@ -1,4 +1,4 @@
-@jwt = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzQ2ODEwNTl9.KIRwQOT_HMpiFzC98XcgFKsZa9VyCYSv7MLql3OBQ1g"
+@jwt = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzUyODk2MDh9.DCpfCR4ZqroJnqZWUvWqPEEDthaad5JNK9oBGOZGg_E"
 ###
 POST http://127.0.0.1:3000/users
 Content-Type: application/json
@@ -18,19 +18,24 @@ Content-Type: application/json
   "email": "jack@gmail.com",
   "password": "password"
 }
+###
+
+GET https://api.spotify.com/v1/me/playlists
+Authorization: Bearer {{ current_user.access_token }}
 
 
 ### Users show
 GET http://localhost:3000/users/1
 
 ### Update user
-PATCH http://localhost:3000/users/1
+PATCH http://localhost:3000/users/
 Content-Type: application/json
 
 {
   "name": "Jon",
   "password": "password",
   "password_confirmation": "password"
+  
 }
 
 ### Destroy user
