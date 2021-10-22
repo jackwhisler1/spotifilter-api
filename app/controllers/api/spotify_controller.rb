@@ -27,17 +27,17 @@ class Api::SpotifyController < ApplicationController
     render json: code
   end
 
-  # def top_songs
-  #   # Need to find a way to send this get request with authorization
-  #   response = HTTP.get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=200&offset=5" => auth("Bearer ")
-  #   response.parse
-  #   songs = []
-  #   response["items"].each do |song|
-  #     songs << {
-  #      "title": song["name"],
-  #      "artist": song["artists"][0]["name"]
-  #     }
-  #   end
+  def top_songs
+    # Need to find a way to send this get request with authorization
+    response = HTTP.auth("Bearer #{@access_token} ").get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=200&offset=5" 
+    response.parse
+    songs = []
+    response["items"].each do |song|
+      songs << {
+       "title": song["name"],
+       "artist": song["artists"][0]["name"]
+      }
+    end
   #   render json: reponse
   # end
   # MVP
