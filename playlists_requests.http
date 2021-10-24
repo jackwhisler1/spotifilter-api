@@ -1,11 +1,22 @@
+### Playlists index
 GET http://127.0.0.1:3000/playlists
 
 
-###
-GET http://127.0.0.1:3000/playlists/1fnuSGnTALt3nEQkLjOPq8
+### Show playlist
+GET http://127.0.0.1:3000/playlists/2f7O6hB3xstqJL90VCl0WV
 Content-Type: application/json
 
-###
+### Create playlist hard coded tracks added
 POST http://127.0.0.1:3000/playlists
 Content-Type: application/json
 
+### Update playlist
+PATCH http://127.0.0.1:3000/playlists/2f7O6hB3xstqJL90VCl0WV
+Content-Type: application/json
+
+{
+      "name": "Sent in Paramssssssss",
+      "description": "wow i'm updated"
+}
+###
+DELETE http://127.0.0.1:3000/playlists/40OsTs7XUyPi4GKE6JvIQ6

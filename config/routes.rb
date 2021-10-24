@@ -24,8 +24,10 @@ Rails.application.routes.draw do
   #update
   patch "/users/:id" => "users#update"
   patch "/shared_playlists/:id" => "shared_playlists#update"
+  patch "/playlists/:id" => "playlists#update"
   #destroy
   delete "/users/:id" => "users#destroy"
   delete "/shared_playlists/:id" => "shared_playlists#destroy"
+  delete "/playlists/:id" => "playlists#destroy"
 
 end
