@@ -1,7 +1,8 @@
 class Api::SpotifyController < ApplicationController
   # before_action :authenticate_user
   def spotify_authorize
-    redirect_to "https://accounts.spotify.com/authorize?client_id=#{Rails.application.credentials.spotify_api_key[:client_id]}&response_type=code&redirect_uri=http://localhost:3000/api/spotify/callback&scope=playlist-modify-private"
+    scope = "playlist-read-private playlist-modify-private user-read-private user-read-email user-library-modify playlist-modify-public"
+    redirect_to "https://accounts.spotify.com/authorize?client_id=#{Rails.application.credentials.spotify_api_key[:client_id]}&response_type=code&redirect_uri=http://localhost:3000/api/spotify/callback&scope=#{scope}"
   end
 
   def spotify_callback
@@ -9,7 +10,7 @@ class Api::SpotifyController < ApplicationController
     response = HTTP.post("https://accounts.spotify.com/api/token", 
     form: {
       grant_type: "authorization_code",
-      code: "AQCeQFlfVyfmBiS1T1qcsnFphwouLDTcufKYESYM2dU3sGllndFafIlm5bAskwhWXF8T3wNLiUS0JKxAiLtbbceTWLEEW7OKKuvgjUYHTNIUABK9jOpgAcwhDuUgxbuwgURcpB3p1UxDV2YEoqZ-mwQ4KSt0AaQQWyOKF0upbhhVD2ygOS40mMbHWnMBof2-yWYLyek9vU07b2w65iINaXBOOIbV188",
+      code: "AQANhnA6GOW8UuNL9NyaIyPM-l8ZbKwgWppjy-4qvosRjHn5LRDwmg0nJOOfS2X6VXk7gJO_yvytte5Pzip8z8ShmrZ0VySHrcDFJlaR73PInWtoQbVrzPFesGXnEyN0vtPWZtgm884tgKUrEkb9CZd3QmkVO41ibyDR8ZFs2Ycmd6c0wzthykzjLXm_TYk4z5r8PJAJkzMP0aGQ_igFt27I2-6kksAVeY4nKIMM4ZhWyiO6QN9QoD-8L22fmH7CCclJwK87eEZQswXqdXWr_UwixI3EMIBnUxPAtoYzahG4GRqkXMscKWYgFS1mGJDj5URSgZRWPYGIjwDnMbDvuNbfQP_u0W3_L3f21gqb0A",
       redirect_uri: "http://localhost:3000/api/spotify/callback",
       client_id: Rails.application.credentials.spotify_api_key[:client_id],
       client_secret: Rails.application.credentials.spotify_api_key[:client_secret]

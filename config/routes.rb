@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   post "/users" => "users#create"
   post "/sessions" => "sessions#create"
   post "/shared_playlists" => "shared_playlists#create"
+  post "/playlists" => "playlists#create"
+
   #show
   get "/users/:id" => "users#show"
   get "/shared_playlists/:id" => "shared_playlists#show"

@@ -20,10 +20,6 @@ Content-Type: application/json
 }
 ###
 
-GET https://api.spotify.com/v1/me/playlists
-Authorization: Bearer {{ current_user.access_token }}
-
-
 ### Users show
 GET http://localhost:3000/users/1
 
