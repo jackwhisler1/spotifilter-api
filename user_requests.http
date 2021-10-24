@@ -1,4 +1,4 @@
-@jwt = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzUyODk2MDh9.DCpfCR4ZqroJnqZWUvWqPEEDthaad5JNK9oBGOZGg_E"
+@jwt = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzU0NjUwMjF9.9M6MENIk8OP1bbAWEGLDrADMjcJMSn0DBoP9Ffrjz0w"
 ###
 POST http://127.0.0.1:3000/users
 Content-Type: application/json

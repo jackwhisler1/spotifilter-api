@@ -1,0 +1,7 @@
+GET http://127.0.0.1:3000/playlists
+
+
+###
+GET http://127.0.0.1:3000/playlists/1fnuSGnTALt3nEQkLjOPq8
+Content-Type: application/json
+
