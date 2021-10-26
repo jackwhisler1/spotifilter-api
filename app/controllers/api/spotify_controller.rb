@@ -10,7 +10,7 @@ class Api::SpotifyController < ApplicationController
     response = HTTP.post("https://accounts.spotify.com/api/token", 
     form: {
       grant_type: "authorization_code",
-      code: "AQAhfhVnnfhxl7Zx9GBN6Pxzt9K39Tcd8iYphM1umtePHg5F6CjYSfJhVkxFJQTOSaiweCJWJMNXnJcHIijCShKIRmjrQEzXOK3pMq7AfOVSJktk5SEGPrQslKL7XAh94WqY3t053qkHTAqOUFVf2an-5m7o7VYypaIca46bX3NcA7ykXUDigEELtfuID_hZxE5j2x94czLWFGMYrGSPg8lmjLe21blLhxtI336MGm5ku5xVCLh6GtNInTMBeGehYsJsK3sdWkzwlUxlCyYRiwWOimgyoArHtulf7OLg9UvKxCmCQyC1OQ8e9G5Ep2ca4mhBuUj9yO2psZqF_4-rTDpprsNgIihiLhyf9YI3mQ",
+      code: "AQD8l9I88ptGCTQ9Qn0dXqq6NkYn3atCDTZsfPeClXs0_D40opQUg0GHxBZ6mSLdXHWvveLx_dr_4DRNjuKgdgOvqizK6FGBa_FBoxUMVlh5f-8s6kZctKIzAhbGZJPhNdcsWGjmeazawiunx51SxgXtCnpwobT-voipOPrp9CEr300Uvq9AX3d6g4rmsfgptyuGsJdItpxBTjsybLeH11lnrsLjXNVdMJ44cFEX44Krk3TL0EaHTx6cWSbXXGxIptYmFccX8nuYaLmTIgiLPlSgtfkCdMnhvvP3BH2e0f7MI_g1ML4hGgPJym0uVLwyzWio51dgpb2sNZJg2r2BLkJtw_Bb2b5t1ARdcs_QAw",
       redirect_uri: "http://localhost:3000/api/spotify/callback",
       client_id: Rails.application.credentials.spotify_api_key[:client_id],
       client_secret: Rails.application.credentials.spotify_api_key[:client_secret]
