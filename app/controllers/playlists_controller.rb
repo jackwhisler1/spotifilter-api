@@ -17,14 +17,28 @@ class PlaylistsController < ApplicationController
 
     #parse through a given playlist and add selected tracks' uri string 
     uris_array = []
+    track_ids = ""
     playlist_source = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/1fnuSGnTALt3nEQkLjOPq8/tracks")
     playlist_source = playlist_source.parse(:json)
-    playlist_source["items"].each do |item| 
-      uris_array << item["track"]["uri"]
+    # render json: playlist_source.parse(:json)
+    playlist_source["items"].each do |song| 
+      uris_array << song["track"]["uri"]
+    #   # uri_code = song["track"]["uri"]
+    #   # uri_code = uri_code.delete("spotify:track:")
+      track_ids += "#{song["track"]["id"].to_s},"
     end
+    track_ids = track_ids.delete_suffix(',')
     uris = {"uris": uris_array}
+    # render json: {string: track_ids}
 
-    HTTP.auth("Bearer #{User.first.access_token}").post("https://api.spotify.com/v1/users/jnwhisler/playlists/#{@created_playlist_id}/tracks", :json => uris)
+    # Sort for energy with get request, cut array to 20
+    response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/audio-features?ids=#{track_ids}")
+    # I have the collection of song URIs, I want them sorted by energy
+    # I can get a new array of all songs with track features, push to new array
+    # sort array by energy, uris array = first 20
+
+    # Create playlist with song uris
+    # HTTP.auth("Bearer #{User.first.access_token}").post("https://api.spotify.com/v1/users/jnwhisler/playlists/#{@created_playlist_id}/tracks", :json => uris)
 
     render json: response.parse(:json)
 
