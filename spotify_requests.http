@@ -1,6 +1,6 @@
 ###
 GET http://127.0.0.1:3000/api/spotify/callback
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzUzNzU2MTJ9.tTxwHfnC1aUV9zfCTlTwpagXSHUxzMFKFA41auIKIhI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzU4MTk4ODl9.2ZxwjCtVLwLF_R87GsYcF-n-neTvGp2QvQBAAciHHls
 
 
 ###

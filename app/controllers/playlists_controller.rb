@@ -44,11 +44,13 @@ class PlaylistsController < ApplicationController
     final_playlist_object = {"uris": final_playlist}
 
     # Create playlist with top 20 energy
-    response = HTTP.auth("Bearer #{User.first.access_token}").post("https://api.spotify.com/v1/users/jnwhisler/playlists/#{@created_playlist_id}/tracks", :json => final_playlist_object)
+    HTTP.auth("Bearer #{User.first.access_token}").post("https://api.spotify.com/v1/users/jnwhisler/playlists/#{@created_playlist_id}/tracks", :json => final_playlist_object)
 
 
-
-    render json: response.parse(:json)
+    # get new playlist
+    created_playlist = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{@created_playlist_id}/tracks")
+    #
+    render json: created_playlist.parse(:json)
 
   end
 
