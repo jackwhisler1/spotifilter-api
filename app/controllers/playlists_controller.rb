@@ -64,13 +64,14 @@ class PlaylistsController < ApplicationController
       "name": params["name"],
       "description": params["description"]
     }
-    response = HTTP.auth("Bearer #{User.first.access_token}").put("https://api.spotify.com/v1/playlists/#{params["id"]}", :json => playlist_details)  
+    HTTP.auth("Bearer #{User.first.access_token}").put("https://api.spotify.com/v1/playlists/#{params["id"]}", :json => playlist_details)  
 
-    render json: response
+    response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}/tracks")  
+    render json: response.parse(:json)
   end
 
   def destroy
     response = HTTP.auth("Bearer #{User.first.access_token}").delete("https://api.spotify.com/v1/playlists/#{params["id"]}/followers")  
-    render json: response
+    render json: {message: "Playlist destroyed"}
   end
 end

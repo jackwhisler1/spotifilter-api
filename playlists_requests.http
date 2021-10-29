@@ -15,8 +15,8 @@ PATCH http://127.0.0.1:3000/playlists/2f7O6hB3xstqJL90VCl0WV
 Content-Type: application/json
 
 {
-      "name": "Sent in Paramssssssss",
-      "description": "wow i'm updated"
+      "name": "Sent in ",
+      "description": "wow i'm not"
 }
 ###
-DELETE http://127.0.0.1:3000/playlists/40OsTs7XUyPi4GKE6JvIQ6
+DELETE http://127.0.0.1:3000/playlists/2f7O6hB3xstqJL90VCl0WV
