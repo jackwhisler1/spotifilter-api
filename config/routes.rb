@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "/users/:id" => "users#show"
   get "/shared_playlists/:id" => "shared_playlists#show"
   get "/playlists/:id" => "playlists#show"
+  get "/spotify_usernames/:id" => "spotify_usernames#show"
   #update
   patch "/users/:id" => "users#update"
   patch "/shared_playlists/:id" => "shared_playlists#update"
