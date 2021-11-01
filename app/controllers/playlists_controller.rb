@@ -8,8 +8,8 @@ class PlaylistsController < ApplicationController
     # response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/me")
     # spotify_user_id = response.parse(:json)["id"]
     options = {
-      "name": "Exercising Big Strong",
-      "description": "well lookie here"
+      "name": "#{params["name"]} Filtered",
+      "description": "Exercise Playlist created by SpotiFilter"
     }
     response = HTTP.auth("Bearer #{User.first.access_token}").post("https://api.spotify.com/v1/users/jnwhisler/playlists", :json => options)
     @created_playlist_id = response.parse(:json)["id"]
@@ -18,7 +18,7 @@ class PlaylistsController < ApplicationController
     #parse through a given playlist and add selected tracks' uri string 
     uris_array = []
     track_ids = ""
-    playlist_source = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/1fnuSGnTALt3nEQkLjOPq8/tracks")
+    playlist_source = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}/tracks")
     playlist_source = playlist_source.parse(:json)
     # render json: playlist_source.parse(:json)
     playlist_source["items"].each do |song| 
@@ -36,7 +36,7 @@ class PlaylistsController < ApplicationController
     audio_features = audio_features.sort! {|a, b| b["energy"] <=> a["energy"] }
     
     # Limits to top 20
-    audio_features = audio_features[0..20]
+    audio_features = audio_features[0..19]
     final_playlist = []
     audio_features.each do |song|
       final_playlist << song["uri"]
@@ -48,14 +48,14 @@ class PlaylistsController < ApplicationController
 
 
     # get new playlist
-    created_playlist = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{@created_playlist_id}/tracks")
+    created_playlist = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{@created_playlist_id}")
     #
     render json: created_playlist.parse(:json)
 
   end
 
   def show
-    response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}/tracks")  
+    response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}")
     render json: response.parse(:json)
   end
 
@@ -72,6 +72,6 @@ class PlaylistsController < ApplicationController
 
   def destroy
     response = HTTP.auth("Bearer #{User.first.access_token}").delete("https://api.spotify.com/v1/playlists/#{params["id"]}/followers")  
-    render json: {message: "Playlist destroyed"}
+    render json: {message: "Playlist unfollowed (API doesn't allow for permanent deletion)"}
   end
 end
