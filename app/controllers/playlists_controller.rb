@@ -6,9 +6,9 @@ class PlaylistsController < ApplicationController
     }
     response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/me/playlists", :params => options)
     playlists = response.parse(:json)["items"]
-    p total_playlists = response.parse(:json)["total"].to_i
+    total_playlists = response.parse(:json)["total"].to_i
     total_playlists = total_playlists - 50
-    
+
     while total_playlists > 0
       options[:offset] += 50
       response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/me/playlists", :params => options)
@@ -33,10 +33,10 @@ class PlaylistsController < ApplicationController
     #parse through a given playlist and add selected tracks' uri string 
     uris_array = []
     track_ids = ""
-    playlist_source = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}/tracks")
-    playlist_source = playlist_source.parse(:json)
+    playlist_source = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}")
+    playlist_source = playlist_source.parse(:json)["tracks"]["items"]
     # render json: playlist_source.parse(:json)
-    playlist_source["items"].each do |song| 
+    playlist_source.each do |song| 
       uris_array << song["track"]["uri"]
       track_ids += "#{song["track"]["id"].to_s},"
     end
