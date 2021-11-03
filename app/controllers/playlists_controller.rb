@@ -46,10 +46,15 @@ class PlaylistsController < ApplicationController
 
     # Get audio features for all tracks
     response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/audio-features?ids=#{track_ids}")
-    # Sort by highest energy 
+    # Sort by audio features 
     audio_features = response.parse(:json)["audio_features"]
-    audio_features = audio_features.sort! {|a, b| b["energy"] <=> a["energy"] }
-    
+
+    # Choose filter attribute
+    if params["filter"] === "energy"
+      audio_features = audio_features.sort! {|a, b| b["energy"] <=> a["energy"] }
+    elsif params["filter"] === "calm"
+      audio_features = audio_features.sort! {|a, b| a["energy"] <=> b["energy"] }
+    end
     # Limits to top 20
     audio_features = audio_features[0..19]
     final_playlist = []
