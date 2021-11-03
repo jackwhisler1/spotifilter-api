@@ -1,6 +1,8 @@
 class SharedPlaylistsController < ApplicationController
   def index
     playlists = SharedPlaylist.all
+    response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}")
+    render json: response.parse(:json)
     render json: playlists
   end
 
