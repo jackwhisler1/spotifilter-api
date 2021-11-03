@@ -23,8 +23,8 @@ class PlaylistsController < ApplicationController
     # response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/me")
     # spotify_user_id = response.parse(:json)["id"]
     options = {
-      "name": "#{params["name"]} Filtered",
-      "description": "Exercise Playlist created by SpotiFilter"
+      "name": "#{params["name"]} (#{params["filter"]})",
+      "description": "#{params["filter"]} Playlist created by SpotiFilter"
     }
     response = HTTP.auth("Bearer #{User.first.access_token}").post("https://api.spotify.com/v1/users/jnwhisler/playlists", :json => options)
     @created_playlist_id = response.parse(:json)["id"]
@@ -50,10 +50,16 @@ class PlaylistsController < ApplicationController
     audio_features = response.parse(:json)["audio_features"]
 
     # Choose filter attribute
-    if params["filter"] === "energy"
+    if params["filter"] === "High Energy"
       audio_features = audio_features.sort! {|a, b| b["energy"] <=> a["energy"] }
-    elsif params["filter"] === "calm"
+    elsif params["filter"] === "Calm"
       audio_features = audio_features.sort! {|a, b| a["energy"] <=> b["energy"] }
+    elsif params["filter"] === "Dance"
+      audio_features = audio_features.sort! {|a, b| b["danceability"] <=> a["danceability"] }
+    elsif params["filter"] === "Faster Tempo"
+      audio_features = audio_features.sort! {|a, b| b["tempo"] <=> a["tempo"] }
+    elsif params["filter"] === "Slower Tempo"
+      audio_features = audio_features.sort! {|a, b| a["tempo"] <=> b["tempo"] }
     end
     # Limits to top 20
     audio_features = audio_features[0..19]
