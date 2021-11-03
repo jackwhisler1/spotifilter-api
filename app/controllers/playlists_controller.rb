@@ -4,14 +4,14 @@ class PlaylistsController < ApplicationController
       limit: 50,
       offset: 0
     }
-    response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/me/playlists", :params => options)
+    response = HTTP.auth("Bearer #{current_user().access_token}").get("https://api.spotify.com/v1/me/playlists", :params => options)
     playlists = response.parse(:json)["items"]
     total_playlists = response.parse(:json)["total"].to_i
     total_playlists = total_playlists - 50
 
     while total_playlists > 0
       options[:offset] += 50
-      response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/me/playlists", :params => options)
+      response = HTTP.auth("Bearer #{current_user().access_token}").get("https://api.spotify.com/v1/me/playlists", :params => options)
       playlists += response.parse(:json)["items"]
       total_playlists = total_playlists - 50
     end

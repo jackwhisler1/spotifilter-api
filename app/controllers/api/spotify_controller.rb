@@ -16,6 +16,7 @@ class Api::SpotifyController < ApplicationController
     # response = HTTP.auth("Bearer #{@access_token}").get("https://api.spotify.com/v1/me")
     # ? About how to test so that a user is logged in before I run the spotify_authorize
     current_user.update(access_token: access_token) 
+    current_user.update(refresh_token: refresh_token)
 
 
     render json: response.parse
