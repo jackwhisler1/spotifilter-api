@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     user.name = params[:name] || user.name
     user.email = params[:email] || user.email
     user.password = params[:password] || user.password
-    user.password_confirmation = params[:password_confirmation] || user.password_confirmation
+    # user.password_confirmation = params[:password_confirmation] || user.password_confirmation
     user.access_token = params[:access_token] || user.access_token
     user.refresh_token = params[:refresh_token] || user.refresh_token
 
