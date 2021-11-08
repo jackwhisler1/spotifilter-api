@@ -16,6 +16,8 @@ class PlaylistsController < ApplicationController
       total_playlists = total_playlists - 50
     end
 
+    # playlists = playlists.order()
+
     render json: playlists
   end
 
@@ -61,15 +63,27 @@ class PlaylistsController < ApplicationController
     elsif params["filter"] === "Slower Tempo"
       audio_features = audio_features.sort! {|a, b| a["tempo"] <=> b["tempo"] }
     end
-    # Limits to top 20
-    audio_features = audio_features[0..19]
+
+    # Sets playlist length if parameter passed
+    total_tracks = params["total_tracks"].to_i - 1
+    # if params["total_tracks"] && params["total_tracks"].to_i <= uris_array.length
+    #   total_tracks = params["total_tracks"].to_i
+    # end
+
+    # Spotify has a limit of 100 songs added
+    if total_tracks >= 100
+      total_tracks = 99
+    end
+
+    # Sets playlist length
+    audio_features = audio_features[0..total_tracks]
     final_playlist = []
     audio_features.each do |song|
       final_playlist << song["uri"]
     end
     final_playlist_object = {"uris": final_playlist}
 
-    # Create playlist with top 20 energy
+    # Create playlist
     HTTP.auth("Bearer #{User.first.access_token}").post("https://api.spotify.com/v1/users/jnwhisler/playlists/#{@created_playlist_id}/tracks", :json => final_playlist_object)
 
 
