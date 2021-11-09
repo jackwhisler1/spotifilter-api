@@ -27,8 +27,8 @@ class Api::SpotifyController < ApplicationController
   def spotify_refresh
     # Need to store access & refresh tokens (?)
     refresh_token = current_user[:refresh_token]
-    # refresh_auth = Base64.strict_encode64(Rails.application.credentials.spotify_api_key[:client_id]) + ":" + Base64.strict_encode64(Rails.application.credentials.spotify_api_key[:client_secret])
-    refresh_auth = "OTc1ZTU0NjAyOThlNGUzYWFkZmI1Mzg4Mzk1ZTY1Yjk6NmNjMjEyM2RlYjM0NDE0MTlhOWY5ZDliNTYwYzZhM2Q="
+    refresh_auth = Base64.strict_encode64((Rails.application.credentials.spotify_api_key[:client_id]) + ":" + (Rails.application.credentials.spotify_api_key[:client_secret]))
+    # refresh_auth = "OTc1ZTU0NjAyOThlNGUzYWFkZmI1Mzg4Mzk1ZTY1Yjk6NmNjMjEyM2RlYjM0NDE0MTlhOWY5ZDliNTYwYzZhM2Q="
     form = {
       grant_type: "refresh_token",
       refresh_token: refresh_token,
