@@ -1,5 +1,7 @@
 class Api::SpotifyController < ApplicationController
   before_action :authenticate_user
+  require "base64"
+
 
   def spotify_callback
     code = params[:code]
@@ -24,33 +26,21 @@ class Api::SpotifyController < ApplicationController
 
   def spotify_refresh
     # Need to store access & refresh tokens (?)
-    code = @refresh_token
-    render json: code
+    refresh_token = current_user[:refresh_token]
+    # refresh_auth = Base64.strict_encode64(Rails.application.credentials.spotify_api_key[:client_id]) + ":" + Base64.strict_encode64(Rails.application.credentials.spotify_api_key[:client_secret])
+    refresh_auth = "OTc1ZTU0NjAyOThlNGUzYWFkZmI1Mzg4Mzk1ZTY1Yjk6NmNjMjEyM2RlYjM0NDE0MTlhOWY5ZDliNTYwYzZhM2Q="
+    form = {
+      grant_type: "refresh_token",
+      refresh_token: refresh_token,
+    }
+    headers={
+      Accept:'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded'
+  }
+    response = HTTP.auth("Basic " + refresh_auth).headers(headers).post("https://accounts.spotify.com/api/token", :params => form)
+
+    access_token = response.parse["access_token"]
+    current_user.update(access_token: access_token) 
+    render json: response.parse(:json)
   end
-
-  def top_songs
-    # Need to find a way to send this get request with authorization
-
-    # Becomes "Bearer #{current_user.access_token}" once callback action works  
-    response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/me/playlists")
-
-    # .get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=200&offset=5") 
-    # Currently not sending any headers
-    songs = []
-    # response["items"].each do |song|
-    #   songs << {
-    #    "title": song["name"],
-    #    "artist": song["artists"][0]["name"]
-    #   }
-    # end
-    response = response.parse(:json)
-    render json: response.as_json
-  end
-  # MVP
-  # Get tokens 
-  # Use tokens to get top tracks
-  # Loop through tracks to check for 15 highest energy
-  # Create new playlist with those songs
-  
-
 end

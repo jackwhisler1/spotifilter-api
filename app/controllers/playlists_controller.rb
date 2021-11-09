@@ -66,9 +66,6 @@ class PlaylistsController < ApplicationController
 
     # Sets playlist length if parameter passed
     total_tracks = params["total_tracks"].to_i - 1
-    # if params["total_tracks"] && params["total_tracks"].to_i <= uris_array.length
-    #   total_tracks = params["total_tracks"].to_i
-    # end
 
     # Spotify has a limit of 100 songs added
     if total_tracks >= 100
