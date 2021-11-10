@@ -4,7 +4,7 @@ class SharedPlaylistsController < ApplicationController
     playlists = playlists.reverse()
     spotify_data = []
     playlists.take(10).each do |playlist|
-      response = HTTP.auth("Bearer #{User.first.access_token}").get("https://api.spotify.com/v1/playlists/#{playlist["playlist_id"]}")
+      response = HTTP.auth("Bearer #{current_user.access_token}").get("https://api.spotify.com/v1/playlists/#{playlist["playlist_id"]}")
       spotify_data << response.parse(:json)
     end
     # render json: response.parse(:json)
