@@ -9,7 +9,7 @@ class Api::SpotifyController < ApplicationController
     form: {
       grant_type: "authorization_code",
       code: code,
-      redirect_uri: "http://localhost:8080/spotify/callback",
+      redirect_uri: "https://spotifilter.netlify.app/spotify/callback",
       client_id: Rails.application.credentials.spotify_api_key[:client_id],
       client_secret: Rails.application.credentials.spotify_api_key[:client_secret]
     })
