@@ -20,11 +20,15 @@ class PlaylistsController < ApplicationController
   end
 
   def create
+    # Get current user's profile name
+    user = HTTP.auth("Bearer #{current_user.access_token}").get("https://api.spotify.com/v1/me")
+    user_id = user["id"]
+
     options = {
       "name": "#{params["name"]} (#{params["filter"]})",
       "description": "#{params["filter"]} Playlist created by SpotiFilter"
     }
-    response = HTTP.auth("Bearer #{current_user.access_token}").post("https://api.spotify.com/v1/users/jnwhisler/playlists", :json => options)
+    response = HTTP.auth("Bearer #{current_user.access_token}").post("https://api.spotify.com/v1/users/#{user_id}/playlists", :json => options)
     @created_playlist_id = response.parse(:json)["id"]
 
 
@@ -33,7 +37,7 @@ class PlaylistsController < ApplicationController
     track_ids = ""
     playlist_source = HTTP.auth("Bearer #{current_user.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}")
     playlist_source = playlist_source.parse(:json)["tracks"]["items"]
-    
+
     playlist_source.each do |song| 
       uris_array << song["track"]["uri"]
       track_ids += "#{song["track"]["id"].to_s},"
