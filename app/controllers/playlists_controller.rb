@@ -33,7 +33,7 @@ class PlaylistsController < ApplicationController
     track_ids = ""
     playlist_source = HTTP.auth("Bearer #{current_user.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}")
     playlist_source = playlist_source.parse(:json)["tracks"]["items"]
-    # render json: playlist_source.parse(:json)
+    
     playlist_source.each do |song| 
       uris_array << song["track"]["uri"]
       track_ids += "#{song["track"]["id"].to_s},"
@@ -81,14 +81,14 @@ class PlaylistsController < ApplicationController
 
 
     # get new playlist
-    created_playlist = HTTP.auth("Bearer #{current_user.access_token}").get("https://api.spotify.com/v1/playlists/#{@created_playlist_id}")
+    created_playlist = HTTP.auth("Bearer #{current_user().access_token}").get("https://api.spotify.com/v1/playlists/#{@created_playlist_id}")
     #
     render json: created_playlist.parse(:json)
 
   end
 
   def show
-    response = HTTP.auth("Bearer #{current_user.access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}")
+    response = HTTP.auth("Bearer #{current_user().access_token}").get("https://api.spotify.com/v1/playlists/#{params["id"]}")
     render json: response.parse(:json)
   end
 
@@ -105,6 +105,6 @@ class PlaylistsController < ApplicationController
 
   def destroy
     response = HTTP.auth("Bearer #{current_user.access_token}").delete("https://api.spotify.com/v1/playlists/#{params["id"]}/followers")  
-    render json: {message: "Playlist unfollowed (API doesn't allow for permanent deletion)"}
+    render json: {message: "Playlist removed"}
   end
 end
