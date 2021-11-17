@@ -22,7 +22,7 @@ class PlaylistsController < ApplicationController
   def create
     # Get current user's profile name
     user = HTTP.auth("Bearer #{current_user.access_token}").get("https://api.spotify.com/v1/me")
-    user_id = user["id"]
+    user_id = user.parse(:json)["id"]
 
     options = {
       "name": "#{params["name"]} (#{params["filter"]})",
